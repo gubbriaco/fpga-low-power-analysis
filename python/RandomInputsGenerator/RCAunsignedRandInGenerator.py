@@ -24,7 +24,7 @@ def RCAunsignedRandInGenerator():
 
 def generate_binary_32bit():
     rand_int_32 = random.randint(0, 2**nBitsAdder - 1)
-    return format(rand_int_32, '04b')
+    return format(rand_int_32, '032b')
 
 
 def write_to_file(
@@ -34,9 +34,9 @@ def write_to_file(
 ):
     file.write(f'input1TB <= "{input1}";\n')
     file.write(f'input2TB <= "{input2}";\n')
-    file.write('wait for T_CLK/2;\n')
     file.write(f'TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));\n')
     file.write(f'Error <= TrueResult - conv_integer(unsigned(outputTB));\n')
+    file.write('wait for T_CLK;\n')
 
 
 if __name__ == "__main__":

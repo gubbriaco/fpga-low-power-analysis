@@ -1,1 +1,1 @@
-nBitsAdder = 4
+nBitsAdder = 32
