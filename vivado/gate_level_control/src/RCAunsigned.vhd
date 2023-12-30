@@ -48,13 +48,14 @@ architecture Behavioral of RCAunsigned is
 	begin
 	
 		carry(0) <= cin;
+		
 		fa_for_generate : for i in 0 to nBitsAdder-1 generate
 			FA : FullAdder port map(
 				input1(i),
 				input2(i),
 				carry(i),
-				output(i),
-				carry(i+1)
+				carry(i+1),
+				output(i)
 			);
 		end generate fa_for_generate;
 
