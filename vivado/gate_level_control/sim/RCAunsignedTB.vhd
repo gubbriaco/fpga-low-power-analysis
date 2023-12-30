@@ -1,6 +1,9 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.std_logic_textio.all;
 use IEEE.STD_LOGIC_arith.ALL;
+library STD;
+use STD.textio.all;
 library work;
 use work.MyDefinitions.all;
 
@@ -43,10 +46,9 @@ architecture Behavioral of RCAunsignedTB is
 	signal input2TB : std_logic_vector(nBitsAdder-1 downto 0) := (others=>'0');
 	signal outputTB : std_logic_vector(nBitsAdder downto 0);
 	
-	-- Error Signal definitions
-	signal TrueResult : integer;
-	signal Error : integer;
-
+	-- Output to file signal definition
+	signal write_output: integer := 0;
+	
 
 	begin
 	
@@ -55,6 +57,24 @@ architecture Behavioral of RCAunsignedTB is
 			input2TB, 
 			outputTB
 		);
+		
+		writing : process
+			-- CHANGE THE PATH OF THE TEXT FILE ACCORDING TO WHERE IT IS LOCATED
+			file output_file : text open write_mode is
+            "D:\Disco D\universita\magistrale\progettazione-low-power\progetti\progetto-3\vivado\gate_level_control\sim\RCAunsignedOutput.txt";
+			variable row : line;
+			
+			begin
+				wait for 100ns;
+				for i in 0 to 25 loop 
+					write_output <= conv_integer( unsigned( outputTB ) );
+					write( row, outputTB );
+					writeline( output_file, row );
+					wait for T_CLK;
+				end loop;
+				file_close( output_file );
+				wait;
+			end process;			
 		
 		clk_process : process
         begin
@@ -66,131 +86,83 @@ architecture Behavioral of RCAunsignedTB is
 			begin
 				wait for 100ns;
 				
-				input1TB <= "01001000100101111001101001111000";
-input2TB <= "10000101000110011110001011100010";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "11101001101100110101111101101001";
+input2TB <= "01100100000000100000100000101011";
 wait for T_CLK;
-input1TB <= "11001011100110100010100010001101";
-input2TB <= "00001100000100101110000011000001";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "10011010100110011000011001110110";
+input2TB <= "11010110100110011010100000010111";
 wait for T_CLK;
-input1TB <= "01000111111010101001000100111001";
-input2TB <= "10000010001011011010111000010000";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "10111111001000001000000000100000";
+input2TB <= "10010100010001100111010101101001";
 wait for T_CLK;
-input1TB <= "11100101001100010010010101110000";
-input2TB <= "00010100101001100110110000000110";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01000011011011110011110000010000";
+input2TB <= "00011000100011000010011001101011";
 wait for T_CLK;
-input1TB <= "10111111001100001100111100010100";
-input2TB <= "01101110110101010000111100100001";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "00110110000101001111110010010111";
+input2TB <= "11001110001111100000111011000010";
 wait for T_CLK;
-input1TB <= "00101011111101000000010111011101";
-input2TB <= "10001010010101111001000001111110";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01101100110011000110000010001000";
+input2TB <= "00110000101110001000000000001011";
 wait for T_CLK;
-input1TB <= "10011111110001011011011111111101";
-input2TB <= "11000111001111100110011101101010";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "11110111100111101101101111010111";
+input2TB <= "10101010111011000000100010110011";
 wait for T_CLK;
-input1TB <= "10000000000000110110001110111101";
-input2TB <= "00011111001010110001000110110101";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "11010100011001101100001001000101";
+input2TB <= "11110101101011001010011111011111";
 wait for T_CLK;
-input1TB <= "01001001111101001101010100001011";
-input2TB <= "11110100011101001001010100101010";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "10101110110111010011110001101010";
+input2TB <= "01101100001101011011101111011010";
 wait for T_CLK;
-input1TB <= "01011001010101110011111110111000";
-input2TB <= "00110011010110011111000110100111";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "10110111011000010100001110000001";
+input2TB <= "10100111010010001111011101111101";
 wait for T_CLK;
-input1TB <= "01010011101110111101001111110110";
-input2TB <= "11010101011111100110001011100010";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01011001111110100111100111000100";
+input2TB <= "01001111111110001100111101000110";
 wait for T_CLK;
-input1TB <= "00001110111111011111001101000001";
-input2TB <= "00101100001011110000100010111100";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01000100110001010110000101100111";
+input2TB <= "10111001110001110010111101011111";
 wait for T_CLK;
-input1TB <= "10010101100101001000000111101110";
-input2TB <= "00100010000101010010100011011000";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "11100111101001000111010001111100";
+input2TB <= "10110001111110010010001111100100";
 wait for T_CLK;
-input1TB <= "10000110011001110001110000000101";
-input2TB <= "00011110110111001011101000011110";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01110001100010011001001001100001";
+input2TB <= "11001100101101010001010110000000";
 wait for T_CLK;
-input1TB <= "01000010111111000010011011111001";
-input2TB <= "00010011000000100010110100000010";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "10111100101100111001010010000101";
+input2TB <= "11101010100101001000011101001011";
 wait for T_CLK;
-input1TB <= "10101100111010101100110000111011";
-input2TB <= "00001110101110110000010001110010";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "00011111110011100011001101111011";
+input2TB <= "01000110010101000110100101001100";
 wait for T_CLK;
-input1TB <= "00000010001001001000111100001000";
-input2TB <= "01001111110111101010111001111100";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "00000111110101100001111000111110";
+input2TB <= "01110011001111111100110000000101";
 wait for T_CLK;
-input1TB <= "01101110011010101011110111111100";
-input2TB <= "10111010010111100111111110011110";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "11101011011100010000001001111100";
+input2TB <= "00101101000110010010010101110110";
 wait for T_CLK;
-input1TB <= "00110101101110100000010100011101";
-input2TB <= "11100001100000101010001000100011";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "11110001000111110111101100010101";
+input2TB <= "01010110001100110111101101101011";
 wait for T_CLK;
-input1TB <= "10100111010001101010110101001110";
-input2TB <= "10011000001001010110111011110100";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01110101111100100111110001010000";
+input2TB <= "00010101111100101100111011101110";
 wait for T_CLK;
-input1TB <= "11100101010010010011100010110011";
-input2TB <= "00001100000001011010101111011110";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01110111100101010000011110111111";
+input2TB <= "01101100101111111011101001010110";
 wait for T_CLK;
-input1TB <= "10011100010111011111111010101111";
-input2TB <= "10001000100100110110001110110011";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01101101000111101111101101111110";
+input2TB <= "11110101101001101010000000111110";
 wait for T_CLK;
-input1TB <= "01001110100000111011000100001110";
-input2TB <= "10111100100000011110010011100010";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "00101101110001110111010111011001";
+input2TB <= "01111001110000000000101000011110";
 wait for T_CLK;
-input1TB <= "00000000101001101111011101010111";
-input2TB <= "11000000100010101100101100100110";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "01010010111110010101100101111110";
+input2TB <= "00000110101010101001101010010001";
 wait for T_CLK;
-input1TB <= "10101000010110000111100000000000";
-input2TB <= "00111101110000001100111100010100";
-TrueResult <= conv_integer(unsigned(input1TB))+conv_integer(unsigned(input2TB));
-Error <= TrueResult - conv_integer(unsigned(outputTB));
+input1TB <= "00101010101010011011000000011111";
+input2TB <= "00010011010100010101110100100001";
 wait for T_CLK;
+
+
 
 
 				
