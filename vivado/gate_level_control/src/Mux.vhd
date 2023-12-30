@@ -11,12 +11,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 -- @out output : std_logic_vector(nInputsMux downto 0) -> Output vector selected based on the parity check result.
 entity Mux is
 	generic (
-		nInputsMux : integer;
-		nSelsMux : integer
+		nInputsMux : integer
 	);
 	port (
 		input1, input2 : in std_logic_vector(nInputsMux-1 downto 0);
-		sel : in std_logic_vector(nSelsMux-1 downto 0);
+		sel : in std_logic;
 		output : out std_logic_vector(nInputsMux-1 downto 0)
 	);
 end Mux;

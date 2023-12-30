@@ -68,12 +68,11 @@ architecture Behavioral of TopArchitecture is
 	-- @out output : std_logic_vector(nInputsMux downto 0) -> Output vector selected based on the parity check result.
 	component Mux
 		generic(
-			nInputsMux : integer;
-			nSelsMux : integer
+			nInputsMux : integer
 		);
 		port(
 			input1, input2 : in std_logic_vector(nInputsMux-1 downto 0);
-			sel : in std_logic_vector(nSelsMux-1 downto 0);
+			sel : in std_logic;
 			output : out std_logic_vector(nInputsMux-1 downto 0)
 		);
 	end component;
@@ -118,10 +117,10 @@ architecture Behavioral of TopArchitecture is
 	signal bdMux : std_logic_vector(nBitsInputs-1 downto 0);
 	
 	-- ABCD Adder signal definition
-	signal abcdAdder : std_logic_vector(nBitsInputs+1 downto 0);
+	signal abcdAdder : std_logic_vector(nBitsInputs downto 0);
 	
 	-- Register Output signal definition
-	signal zReg : std_logic_vector(nBitsInputs+1 downto 0);
+	signal zReg : std_logic_vector(nBitsInputs downto 0);
 
 
 
@@ -139,14 +138,14 @@ architecture Behavioral of TopArchitecture is
 		RegSel2 : Reg generic map(nBitsSels) port map(sel2, clk, rst, sel2Reg);
 		
 		-- Adder Sels definition
-		AdderSel1Sel2 : Adder generic map(nBitsSels) port map(sel1, sel2, sel12Adder);
+		AdderSel1Sel2 : Adder generic map(nBitsSels) port map(sel1Reg, sel2Reg, sel12Adder);
 		
 		-- ParityCheck definition
-		ParityCheckSel12 : ParityCheck generic map(nBitsSels+1) port map(sel12, selAdderInputs);
+		ParityCheckSel12 : ParityCheck generic map(nBitsSels+1) port map(sel12Adder, selAdderInputs);
 		
 		-- Mux definitions
-		MuxAC : Mux generic map(nBitsInputs) port map(a, c, selAdderInputs, acMux);
-		MuxBD : Mux generic map(nBitsInputs) port map(b, d, selAdderInputs, bdMux);
+		MuxAC : Mux generic map(nBitsInputs) port map(aReg, cReg, selAdderInputs, acMux);
+		MuxBD : Mux generic map(nBitsInputs) port map(bReg, dReg, selAdderInputs, bdMux);
 		
 		-- AC and BD Adder definition
 		AdderACBD : Adder generic map(nBitsInputs) port map(acMux, bdMux, abcdAdder);
