@@ -1,0 +1,8 @@
+- registering
+
+- sommatori ottimizzati (low power)
+
+- registering e sommatori ottimizzati (low power) -> ibrido
+
+
+- clock gating ?

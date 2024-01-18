@@ -6,7 +6,7 @@ from properties import nInputsTop, nSelsTop
 def TopArchitectureRandInGenerator():
     # Set the number of lines you want in the file
     num_lines = 100
-    file_path = os.path.abspath('../../vivado/gate_level_control/non_ordered/sim/')
+    file_path = os.path.abspath('../../vivado/registering/sim/')
     filename = 'TopArchitectureRandomInputsGenerator.txt'
     top_architecture_random_inputs_file_path = os.path.join(file_path, filename)
 
