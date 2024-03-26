@@ -1,0 +1,2 @@
+# FPGA ANALYSIS
+[The initial part of the project involves the description, using VHDL hardware description language and Xilinx Vivado 2018.3 design software, of an unoptimized digital circuit and its optimization using low-powering techniques. Specifically, in the final part of the project, the results obtained were analyzed in order to search for the best solution among those proposed. Among these strategies, techniques such as registering, clock gating in a variety of configurations, and a hybrid approach combining both methodologies were examined and tested.]
